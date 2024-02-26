@@ -162,11 +162,10 @@
     };
     
     const deleteElement = document.getElementById ('deleteComment');
-    // const allComments = document.querySelector('#list').querySelectorAll('.comment');
-    // console.log(allComments);
+    const allComments = document.querySelector('#list').querySelectorAll('.comment');
 
     deleteElement.addEventListener("click", () => {
-      lastElement.innerHTML.lastIndexOf('comment').remove;
+      allComments.innerHTML.lastIndexOf('comment').remove;
     });
 
     console.log("It works!");
