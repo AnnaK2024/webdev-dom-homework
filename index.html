@@ -104,11 +104,11 @@
       nameElement.classList.remove("error");
       textElement.classList.remove("error");
       
-      if (nameElement.value === "") {
+      if (nameElement.value.trim() === "") {
         nameElement.classList.add("error");
         return;
       }  
-      if (textElement.value === "") {
+      if (textElement.value.trim() === "") {
         textElement.classList.add("error");
         return;
       };
