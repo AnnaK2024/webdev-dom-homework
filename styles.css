@@ -53,7 +53,7 @@ body {
   .comment-footer {
     display: flex;
     justify-content: flex-end;
-    gap: 50px;
+    gap: 100px;
   }
 
   .comment-body {
@@ -184,6 +184,23 @@ body {
 
   }
   .save-button:hover {
+    opacity: 0.9;
+  }
+
+  .textarea {
+    font-size: 37px;
+    border: none;
+    border-radius: 27px;
+    cursor: pointer;
+    font-size: 17px;
+    padding: 7px 12px;
+    font-family: Helvetica;
+    color: #ffffff;
+    background-color: rgb(114, 95, 147);
+    display: none;
+
+  }
+  .textarea:hover {
     opacity: 0.9;
   }
 

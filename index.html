@@ -116,12 +116,8 @@
            <textarea type="textarea" class="${сommentator.isEdit ? 'add-form-text' : 'display-none'}" >${сommentator.comment}</textarea>
           </div>
           <div class="comment-footer">
-            <div class="edit">
-            <button class="${сommentator.isEdit ? 'edit-button' : 'display-none'}" data-index="${index}">Редактировать</button>
-          </div>    
-          <div class="edit">
-            <button class="${сommentator.isEdit ? 'save-button' : 'display-none'}" data-index="${index}">Сохранить</button>
-          </div>      
+            <button class="${сommentator.isEdit ? 'edit-button' : 'save-button'}" data-index="${index}">Редактировать</button>
+            <button class="${сommentator.isEdit ? 'save-button' : 'textarea'}" data-index="${index}">Сохранить</button>
           <div class="likes">
             <span class="likes-counter">${сommentator.likes}</span>
             <button data-like="${сommentator.likes}" data-index="${index}" class="like-button ${сommentators[index].isLiked ?'-active-like' : 'like-button'}"></button>
