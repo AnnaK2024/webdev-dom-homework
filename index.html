@@ -120,7 +120,6 @@
          </li>`;
       })
       .join("");
-
       
       listElement.innerHTML = commentatorsHtml;
       
@@ -135,8 +134,8 @@
         const index = likeButtonEl.dataset.index;
         const counter = likeButtonEl.dataset.like;
 
-        likeButtonEl.addEventListener("click", (e) => {
-          e.stopPropagation();
+        likeButtonEl.addEventListener("click", (event) => {
+          event.stopPropagation();
 
           if (сommentators[index].isLiked === false) {
 
@@ -162,12 +161,11 @@
     const answerComment = () => {
     const commentsElements = document.querySelectorAll('.comment');
      for (const commentsEl of commentsElements) {
-       commentsEl.addEventListener('click', (e) => {
-        e.stopPropagation();
+       commentsEl.addEventListener('click', () => {
 
         const index = commentsEl .dataset.index;
         
-        textElement.value = `> ${сommentators[index].comment}\n${сommentators[index].name}`;
+        textElement.value = `${сommentators[index].comment}\n${сommentators[index].name}`;
 
         initEventListeners();
 
@@ -175,7 +173,6 @@
       }
     }
     answerComment();
-    
 
     const sanitizeHtml = (htmlString) => {
       return htmlString.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
@@ -216,7 +213,6 @@
       })
 
       renderCommentators();
-      answerComment();
       nameElement.value = "";
       textElement.value = "";
     });
