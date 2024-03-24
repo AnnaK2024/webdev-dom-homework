@@ -236,13 +236,10 @@
       };
      
     const removeButton = document.getElementById("deleteComment");
-    const listItems = document.getElementById("list").getElementsByTagName("li");
-    removeButton.addEventListener("click", removeItem);
-     function removeItem() {
-       if(listItems.length === 0) return;
-       var last = listItems[listItems.length - 1];
-       last.parentNode.removeChild(last);
-      };
+      removeButton.addEventListener("click", () => {
+       сommentators.pop();
+       renderCommentators();
+    });
     
     console.log("It works!");
 
