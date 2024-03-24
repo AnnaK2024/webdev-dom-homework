@@ -162,12 +162,12 @@
     const answerComment = () => {
     const commentsElements = document.querySelectorAll('.comment');
      for (const commentsEl of commentsElements) {
-       commentsEl.addEventListener('click', () => {
-        console.log('Привет');
+       commentsEl.addEventListener('click', (e) => {
+        e.stopPropagation();
 
         const index = commentsEl .dataset.index;
         
-        textElement.value = `> ${сommentators[index].comment} ${сommentators[index].name}`;
+        textElement.value = `> ${сommentators[index].comment}\n${сommentators[index].name}`;
 
         initEventListeners();
 
@@ -175,9 +175,10 @@
       }
     }
     answerComment();
+    
 
     const sanitizeHtml = (htmlString) => {
-      return htmlString.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("&", "&amp;").replaceAll('"', "&quot;");
+      return htmlString.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
     };
 
     buttonElement.addEventListener("click", () => {
@@ -229,14 +230,11 @@
       };
      
     const removeButton = document.getElementById("deleteComment");
-    const listItems = document.getElementById("list").getElementsByTagName("li");
-    removeButton.addEventListener("click", removeItem);
-     function removeItem() {
-       if(listItems.length === 0) return;
-       var last = listItems[listItems.length - 1];
-       last.parentNode.removeChild(last);
-      };
-    
+    removeButton.addEventListener("click", () => {
+      сommentators.pop();
+      renderCommentators();
+    });
+
     console.log("It works!");
 
   </script>
