@@ -90,7 +90,7 @@
         comment : "Это будет первый комментарий на этой странице",
         likes : 3,
         isLiked: false,
-        isEdit: true,
+        isEdit: false,
         
       },
       {
@@ -99,30 +99,34 @@
         comment : "Мне нравится как оформлена эта страница! ❤",
         likes : 75,
         isLiked: false,
-        isEdit: true,
+        isEdit: false,
       },
     ];
     
 
     const renderCommentators = () => {
       const commentatorsHtml = сommentators.map((сommentator, index) => {
-        return 
-        `<li class="comment">
-           <div class="comment-header">
-            <div>${сommentator.name}</div>
-            <div>${сommentator.date}</div>
-           </div>
-           <div data-text="${сommentator.comment}" class="comment-body">
-            <div class="comment-text">${сommentator.comment}</div>
-            <div data-change-text="${сommentator.comment}" ${сommentators[index].isEdit ? `<textarea class="comment-edited-text"> ${сommentator[index].comment} </textarea>` : `<div class="comment-text"> ${сommentator[index].comment} </div>` }
-            <button data-change-title data-index="${index}" class ="editButton" ${сommentators[index].isEdit? "Сохранить":"Редактировать"} >Редактировать</button>
-           </div>
-           <div class="comment-footer">
-            <div class="likes">
-             <span class="likes-counter">${сommentator.likes}</span>
-             <button data-like="${сommentator.likes}" data-index="${index}" class="like-button ${сommentators[index].isLiked ?'-active-like' : 'like-button'}"></button>
-            </div>
-           </div>
+        return `<li class="comment" data-index="${index}">
+          <div class="comment-header">
+           <div>${сommentator.name}</div>
+           <div>${сommentator.date}</div>
+          </div>
+          <div class="comment-body">
+           <div class="${сommentator.isEdit ? 'display-none' : 'comment-text'}">${сommentator.comment}</div>
+           <textarea type="textarea" class="${сommentator.isEdit ? 'add-form-text' : 'display-none'}" >${сommentator.comment}</textarea>
+          </div>
+          <div class="comment-footer">
+            <div class="edit">
+            <button class="${сommentator.isEdit ? 'edit-button' : 'display-none'}" data-index="${index}">Редактировать</button>
+          </div>    
+          <div class="edit">
+            <button class="${сommentator.isEdit ? 'save-button' : 'display-none'}" data-index="${index}">Сохранить</button>
+          </div>      
+          <div class="likes">
+            <span class="likes-counter">${сommentator.likes}</span>
+            <button data-like="${сommentator.likes}" data-index="${index}" class="like-button ${сommentators[index].isLiked ?'-active-like' : 'like-button'}"></button>
+          </div>
+        </div>
         </li>`;
       })
       .join("");
@@ -130,40 +134,32 @@
       listElement.innerHTML = commentatorsHtml;
       
       initEventListeners();
-      editEventListeners()
+      editEventListeners();
     };
+
 
     const editEventListeners = () => { 
-
-      const editButtonElements = document.querySelectorAll(".editButton"); 
-
+      const editButtonElements = document.querySelectorAll(".edit-button"); 
       for ( const editButtonEl of editButtonElements) { 
-
-        const buttonIndex = editButtonEl.dataset.index; 
-        const changeTitle = editButtonEl.dataset.changeTitle;
-        const changeText = editButtonEl.dataset.changeText;
-       
-        editButtonEl.addEventListener("click", () => { 
-
-          if (сommentator[buttonIndex].isEdit === false) {
-
-            changeTitle = "Сохранить";
-
-            сommentators[buttonIndex].isEdit = true;
-
-          } else if (сommentators[buttonIndex].isEdit = true);
-
-            changeTitle = "Редактировать";
-
-            сommentators[buttonIndex].isEdit = false;
-
+        editButtonEl.addEventListener("click", (e) => { 
+          e.stopPropagation();
+          const index = editButtonEl.dataset.index;
+          сommentators[index].isEdit = !сommentators[index].isEdit;
           renderCommentators();
-           
         });
-      };
-    };
-   
-    editEventListeners();
+      }
+
+      const saveButtons = document.querySelectorAll(".save-button");
+      for (const saveButton of saveButtons) {
+        saveButton.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const index = saveButton.dataset.index;
+          сommentators[index].isEdit = !сommentators[index].isEdit;
+          сommentators[index].comment = saveButton.closest('.comment').querySelector('textarea').value
+          renderCommentators();
+        });
+      }
+    }
 
     const initEventListeners = () => {
       const likeButtonElement = document.querySelectorAll(".like-button");
@@ -227,7 +223,7 @@
         date : formatTime(currentDate),
         comment : textElement.value,
         likes : 0,
-        isLiked: true,
+        isLiked: false,
       })
 
       renderCommentators();

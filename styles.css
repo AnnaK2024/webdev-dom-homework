@@ -53,6 +53,7 @@ body {
   .comment-footer {
     display: flex;
     justify-content: flex-end;
+    gap: 50px;
   }
 
   .comment-body {
@@ -64,9 +65,7 @@ body {
     font-size: 32px;
   }
 
-  .comment-edited-text {
-    font-size: 32px;
-  }
+
 
   .likes {
     display: flex;
@@ -154,7 +153,7 @@ body {
   .button-delete:hover {
     opacity: 0.9;
   }
-  .editButton {
+  .edit-button {
     font-size: 37px;
     border: none;
     border-radius: 27px;
@@ -164,10 +163,27 @@ body {
     font-family: Helvetica;
     color: #ffffff;
     background-color: rgb(114, 95, 147);
-    margin-left: 362px;
 
   }
-  .editButtone:hover {
+  .edit-button:hover {
+    opacity: 0.9;
+  }
+  .display-none {
+    display: none;
+  }
+  .save-button {
+    font-size: 37px;
+    border: none;
+    border-radius: 27px;
+    cursor: pointer;
+    font-size: 17px;
+    padding: 7px 12px;
+    font-family: Helvetica;
+    color: #ffffff;
+    background-color: rgb(114, 95, 147);
+
+  }
+  .save-button:hover {
     opacity: 0.9;
   }
 
