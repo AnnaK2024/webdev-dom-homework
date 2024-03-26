@@ -8,7 +8,7 @@
 
   <body>
     <div class="container">
-      <ul class="comments">
+      <ul id="list" class="comments">
         <li class="comment">
           <div class="comment-header">
             <div>Глеб Фокин</div>
@@ -44,28 +44,135 @@
           </div>
         </li>
       </ul>
-      <div class="add-form">
-        <input
-          type="text"
+      <div class="add-form" id="form">
+        <input 
+          type="text" 
           class="add-form-name"
           placeholder="Введите ваше имя"
+          id="name-input"
         />
-        <textarea
-          type="textarea"
+        <textarea 
+          type="textarea" 
           class="add-form-text"
           placeholder="Введите ваш коментарий"
           rows="4"
+          id="text-input"
         ></textarea>
         <div class="add-form-row">
-          <button class="add-form-button">Написать</button>
+          <button class="add-form-button" id="add-button">Написать</button>
+        </div>
+        <div>
+          <button class="button-delete" id="deleteComment">Удалить последний комментарий</button>
         </div>
       </div>
     </div>
   </body>
 
+  <style>
+    .error {
+      background-color: rgb(141, 216, 241);
+    }
+    .empty {
+      background-color: rgb(201, 199, 199);
+    }
+  </style>
+
   <script>
     "use strict";
-    // Код писать здесь
+
+    const listElement = document.getElementById ('list');
+    const nameElement = document.getElementById ('name-input');
+    const textElement = document.getElementById ('text-input');
+    const buttonElement = document.getElementById ('add-button');
+
+    // buttonElement.disabled = true;
+    // function input() {
+    //   if (nameElement.value.trim() !== "" && textElement.value.trim() !== "") {
+    //     buttonElement.disabled = false;
+    //     buttonElement.classList.remove("empty");
+    //   } else {
+    //     buttonElement.disabled = true;
+    //     buttonElement.classList.add("empty");
+    //   }
+    // }
+    // nameElement.addEventListener("input" , input);
+    // textElement.addEventListener("input" , input);
+
+    // Вопрос по валидации. Если мы пишем функцию на активность кнопки и подсвечивание серым, тогда как проверять пустые строки цветом?
+    // Осталось основное задание - проверка по тексту
+
+    buttonElement.addEventListener("click", () => {
+      nameElement.classList.remove("error");
+      textElement.classList.remove("error");
+      
+      if (nameElement.value.trim() === "") {
+        nameElement.classList.add("error");
+        return;
+      }  
+      if (textElement.value.trim() === "") {
+        textElement.classList.add("error");
+        return;
+      };
+      
+      let currentDate = new Date();
+
+      function formatTime(currentDate){
+        
+        const date = currentDate.getDate().toString().padStart(2, "0");
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+        const year = currentDate.getFullYear().toString().substr(2,2);
+        // year = year.toString().substr(-2);
+        
+        const h = currentDate.getHours().toString().padStart(2, "0");
+        const m = currentDate.getMinutes().toString().padStart(2, "0");
+
+        return `${date}.${month}.${year} ${h}:${m}`
+      }
+     
+     const oldListHtml = listElement.innerHTML;
+     listElement.innerHTML = oldListHtml +
+      `<li class="comment">
+        <div class="comment-header">
+         <div>${nameElement.value}</div>
+         <div>${formatTime(currentDate)}</div>
+       </div>
+       <div class="comment-body">
+         <div class="comment-text">
+           ${textElement.value}
+         </div>
+       </div>
+       <div class="comment-footer">
+         <div class="likes">
+           <span class="likes-counter">0</span>
+           <button class="like-button"></button>
+         </div>
+       </div>
+      </li>` 
+      nameElement.value = "";
+      textElement.value = "";
+    });
+
+    const formElement = document.getElementById ('form');
+    formElement.addEventListener('keyup', keyEvent);
+
+    function keyEvent(e) {
+     if (e.code === 'Enter') {
+      buttonElement.dispatchEvent(new Event('click'));
+     }
+    };
+
+    const removeButton = document.getElementById("deleteComment");
+    
+    removeButton.addEventListener("click", removeItem);
+
+    function removeItem() {
+      let list=document.getElementById("list");
+      let listItems = list.getElementsByTagName("li");
+
+      let last=listItems[listItems.length-1];
+      list.removeChild(last);
+    };
+
     console.log("It works!");
   </script>
 </html>
