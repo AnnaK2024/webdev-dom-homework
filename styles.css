@@ -53,6 +53,7 @@ body {
   .comment-footer {
     display: flex;
     justify-content: flex-end;
+    gap: 100px;
   }
 
   .comment-body {
@@ -63,6 +64,8 @@ body {
   .comment-text {
     font-size: 32px;
   }
+
+
 
   .likes {
     display: flex;
@@ -137,12 +140,12 @@ body {
   }
 
   .button-delete {
-    font-size: 24px;
+    font-size: 37px;
     border: none;
-    border-radius: 18px;
+    border-radius: 27px;
     cursor: pointer;
-    font-size: 12px;
-    padding: 5px 10px;
+    font-size: 17px;
+    padding: 7px 12px;
     font-family: Helvetica;
     color: #ffffff;
     background-color: rgb(114, 95, 147);
@@ -150,4 +153,56 @@ body {
   .button-delete:hover {
     opacity: 0.9;
   }
+  .edit-button {
+    font-size: 37px;
+    border: none;
+    border-radius: 27px;
+    cursor: pointer;
+    font-size: 17px;
+    padding: 7px 12px;
+    font-family: Helvetica;
+    color: #ffffff;
+    background-color: rgb(114, 95, 147);
+
+  }
+  .edit-button:hover {
+    opacity: 0.9;
+  }
+  .display-none {
+    display: none;
+  }
+  .save-button {
+    font-size: 37px;
+    border: none;
+    border-radius: 27px;
+    cursor: pointer;
+    font-size: 17px;
+    padding: 7px 12px;
+    font-family: Helvetica;
+    color: #ffffff;
+    background-color: rgb(114, 95, 147);
+
+  }
+  .save-button:hover {
+    opacity: 0.9;
+  }
+
+  .textarea {
+    font-size: 37px;
+    border: none;
+    border-radius: 27px;
+    cursor: pointer;
+    font-size: 17px;
+    padding: 7px 12px;
+    font-family: Helvetica;
+    color: #ffffff;
+    background-color: rgb(114, 95, 147);
+    display: none;
+
+  }
+  .textarea:hover {
+    opacity: 0.9;
+  }
+
+
 
