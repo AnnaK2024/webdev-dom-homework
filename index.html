@@ -90,7 +90,10 @@
         comment : "Это будет первый комментарий на этой странице",
         likes : 3,
         isLiked: false,
+
+
         isEdit: false,
+
         
       },
       {
@@ -99,15 +102,17 @@
         comment : "Мне нравится как оформлена эта страница! ❤",
         likes : 75,
         isLiked: false,
+
+
         isEdit: false,
+
       },
     ];
-    
 
     const renderCommentators = () => {
       const commentatorsHtml = сommentators.map((сommentator, index) => {
         return `<li class="comment" data-index="${index}">
-          
+
           <div class="comment-header">
            <div>${сommentator.name}</div>
            <div>${сommentator.date}</div>
@@ -121,11 +126,21 @@
           <div class="comment-footer">
             <button class="${сommentator.isEdit ? 'edit-button' : 'save-button'}" data-index="${index}">Редактировать</button>
             <button class="${сommentator.isEdit ? 'save-button' : 'textarea'}" data-index="${index}">Сохранить</button>
+          <div class="likes">
+            <span class="likes-counter">${сommentator.likes}</span>
+            <button data-like="${сommentator.likes}" data-index="${index}" class="like-button ${сommentators[index].isLiked ?'-active-like' : 'like-button'}"></button>
+          </div>
+        </div>
+
+          <div class="comment-footer">
+            <button class="${сommentator.isEdit ? 'edit-button' : 'save-button'}" data-index="${index}">Редактировать</button>
+            <button class="${сommentator.isEdit ? 'save-button' : 'textarea'}" data-index="${index}">Сохранить</button>
            <div class="likes">
             <span class="likes-counter">${сommentator.likes}</span>
             <button data-like="${сommentator.likes}" data-index="${index}" class="like-button ${сommentators[index].isLiked ?'-active-like' : 'like-button'}"></button>
            </div>
           </div>
+
         </li>`;
       })
       .join("");
@@ -134,7 +149,32 @@
       
       initEventListeners();
       editEventListeners();
+
+      answerComment();
     };
+
+
+    function answerComment () {
+      
+      const commentsElements = document.querySelectorAll('.comment');
+
+      for (const commentsEl of commentsElements) { 
+
+        commentsEl.addEventListener('click', () => {
+
+          const index = commentsEl .dataset.index;
+        
+          textElement.value = `QUOTE_BEGIN${сommentators[index].comment}\n${сommentators[index].name}QUOTE_END`;
+
+          renderCommentators();
+
+        })
+      }
+    };
+
+
+    };
+
 
 
     const editEventListeners = () => { 
@@ -167,7 +207,8 @@
         const index = likeButtonEl.dataset.index;
         const counter = likeButtonEl.dataset.like;
 
-        likeButtonEl.addEventListener("click", () => {
+        likeButtonEl.addEventListener("click", (event) => {
+          event.stopPropagation();
 
           if (сommentators[index].isLiked === false) {
 
@@ -190,7 +231,16 @@
     }
     renderCommentators();
 
-    
+    const sanitizeHtml = (htmlString) => {
+      return htmlString
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
+      .replaceAll("QUOTE_END", "</div>")
+    };
+
     buttonElement.addEventListener("click", () => {
       nameElement.classList.remove("error");
       textElement.classList.remove("error");
@@ -218,9 +268,9 @@
       }; 
 
       сommentators.push({
-        name : nameElement.value,
+        name : sanitizeHtml(nameElement.value),
         date : formatTime(currentDate),
-        comment : textElement.value,
+        comment : sanitizeHtml(textElement.value),
         likes : 0,
         isLiked: false,
       })
@@ -239,11 +289,19 @@
       };
      
     const removeButton = document.getElementById("deleteComment");
+
+    removeButton.addEventListener("click", () => {
+      сommentators.pop();
+      renderCommentators();
+    });
+
+
       removeButton.addEventListener("click", () => {
        сommentators.pop();
        renderCommentators();
     });
     
+
     console.log("It works!");
 
   </script>
