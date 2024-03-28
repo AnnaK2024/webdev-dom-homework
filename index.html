@@ -85,20 +85,6 @@
     const textElement = document.getElementById ('text-input');
     const buttonElement = document.getElementById ('add-button');
 
-    // buttonElement.disabled = true;
-    // function input() {
-    //   if (nameElement.value.trim() !== "" && textElement.value.trim() !== "") {
-    //     buttonElement.disabled = false;
-    //     buttonElement.classList.remove("empty");
-    //   } else {
-    //     buttonElement.disabled = true;
-    //     buttonElement.classList.add("empty");
-    //   }
-    // }
-    // nameElement.addEventListener("input" , input);
-    // textElement.addEventListener("input" , input);
-
-
     buttonElement.addEventListener("click", () => {
       nameElement.classList.remove("error");
       textElement.classList.remove("error");
