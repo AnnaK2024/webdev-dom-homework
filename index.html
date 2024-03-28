@@ -138,7 +138,8 @@
 
       for (const commentsEl of commentsElements) { 
 
-        commentsEl.addEventListener('click', () => {
+        commentsEl.addEventListener('click', (event) => {
+          event.stopPropagation();
 
           const index = commentsEl .dataset.index;
         

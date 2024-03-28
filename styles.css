@@ -207,7 +207,10 @@ body {
 
 .quote {
   box-sizing: border-box;
-  background-color: white;
+  background-color: rgb(230, 220, 247);
+  font-size: 37px;
+  color: #202020;
+  border-radius: 10px;
 }
 
 
