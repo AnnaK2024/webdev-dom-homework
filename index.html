@@ -103,29 +103,75 @@
 
     const renderCommentators = () => {
       const commentatorsHtml = сommentators.map((сommentator, index) => {
-        return `<li data-index='${index}' class="comment">
-           <div class="comment-header">
-            <div>${сommentator.name}</div>
-            <div>${сommentator.date}</div>
-           </div>
-           <div data-text="${сommentator.comment}" data-index="${index}" class="comment-body">
-           <div class="comment-text">${сommentator.comment}</div>
-           </div>
-           <div class="comment-footer">
-            <div class="likes">
-             <span class="likes-counter">${сommentator.likes}</span>
-             <button data-like="${сommentator.likes}" data-index="${index}" class="like-button ${сommentators[index].isLiked ?'-active-like' : 'like-button'}"></button>
-            </div>
-           </div>
-         </li>`;
+        return `<li class="comment" data-index="${index}">
+          <div class="comment-header">
+           <div>${сommentator.name}</div>
+           <div>${сommentator.date}</div>
+          </div>
+          <div class="comment-body">
+           <div class="${сommentator.isEdit ? 'display-none' : 'comment-text'}">${сommentator.comment}</div>
+           <textarea type="textarea" class="${сommentator.isEdit ? 'add-form-text' : 'display-none'}" >${сommentator.comment}</textarea>
+          </div>
+          <div class="comment-footer">
+            <button class="${сommentator.isEdit ? 'edit-button' : 'save-button'}" data-index="${index}">Редактировать</button>
+            <button class="${сommentator.isEdit ? 'save-button' : 'textarea'}" data-index="${index}">Сохранить</button>
+          <div class="likes">
+            <span class="likes-counter">${сommentator.likes}</span>
+            <button data-like="${сommentator.likes}" data-index="${index}" class="like-button ${сommentators[index].isLiked ?'-active-like' : 'like-button'}"></button>
+          </div>
+        </div>
+        </li>`;
       })
       .join("");
-      
+
       listElement.innerHTML = commentatorsHtml;
       
       initEventListeners();
-      
+      editEventListeners();
+      answerComment();
     };
+
+
+    function answerComment () {
+      
+      const commentsElements = document.querySelectorAll('.comment');
+
+      for (const commentsEl of commentsElements) { 
+
+        commentsEl.addEventListener('click', () => {
+
+          const index = commentsEl .dataset.index;
+        
+          textElement.value = `QUOTE_BEGIN${сommentators[index].comment}\n${сommentators[index].name}QUOTE_END`;
+
+          renderCommentators();
+
+        })
+      }
+    };
+
+    const editEventListeners = () => { 
+      const editButtonElements = document.querySelectorAll(".edit-button"); 
+      for ( const editButtonEl of editButtonElements) { 
+        editButtonEl.addEventListener("click", (e) => { 
+          e.stopPropagation();
+          const index = editButtonEl.dataset.index;
+          сommentators[index].isEdit = !сommentators[index].isEdit;
+          renderCommentators();
+        });
+      }
+
+      const saveButtons = document.querySelectorAll(".save-button");
+      for (const saveButton of saveButtons) {
+        saveButton.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const index = saveButton.dataset.index;
+          сommentators[index].isEdit = !сommentators[index].isEdit;
+          сommentators[index].comment = saveButton.closest('.comment').querySelector('textarea').value
+          renderCommentators();
+        });
+      }
+    }
 
     const initEventListeners = () => {
       const likeButtonElement = document.querySelectorAll(".like-button");
@@ -158,24 +204,14 @@
     }
     renderCommentators();
 
-    const answerComment = () => {
-    const commentsElements = document.querySelectorAll('.comment');
-     for (const commentsEl of commentsElements) {
-       commentsEl.addEventListener('click', () => {
-
-        const index = commentsEl .dataset.index;
-        
-        textElement.value = `${сommentators[index].comment}\n${сommentators[index].name}`;
-
-        initEventListeners();
-
-       })
-      }
-    }
-    answerComment();
-
     const sanitizeHtml = (htmlString) => {
-      return htmlString.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
+      return htmlString
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
+      .replaceAll("QUOTE_END", "</div>")
     };
 
     buttonElement.addEventListener("click", () => {
